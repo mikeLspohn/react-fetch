@@ -3,6 +3,11 @@ import commonjs from 'rollup-plugin-commonjs'
 import pkg from './package.json'
 import babel from 'rollup-plugin-babel'
 
+const namedExports = {
+  './node_modules/react/index.js': ['Component']
+
+}
+
 export default [
   // browser-friendly UMD build
   {
@@ -17,11 +22,7 @@ export default [
         exclude: 'node_modules/**'
       }),
       resolve(),
-      commonjs({
-        namedExports: {
-          './node_modules/react/index.js': ['Component']
-        }
-      })
+      commonjs({ namedExports })
     ]
   },
 
@@ -37,11 +38,7 @@ export default [
         exclude: 'node_modules/**'
       }),
       resolve({module: true}),
-      commonjs({
-        namedExports: {
-          './node_modules/react/index.js': ['Component']
-        }
-      })
+      commonjs({ namedExports })
     ]
   }
 ]
