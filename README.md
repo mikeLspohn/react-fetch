@@ -40,3 +40,7 @@ export const FetchExample = props => (
 //   error={Flash}
 // />
 ```
+
+# Development
+
+To make a rollup build just run `rollup -c` _assuming you have rollup installed_
