@@ -16,19 +16,18 @@ export default [
       babel({
         exclude: 'node_modules/**'
       }),
-      resolve(), // so Rollup can find `ms`
+      resolve(),
       commonjs({
         namedExports: {
           './node_modules/react/index.js': ['Component']
         }
-      }) // so Rollup can convert `ms` to an ES module
+      })
     ]
   },
 
-    // esm/cjs builds
+  // esm/cjs builds
   {
     input: 'src/react-fetch.js',
-    external: ['ms'],
     output: [
       { file: pkg.main, format: 'cjs' },
       { file: pkg.module, format: 'es' }
