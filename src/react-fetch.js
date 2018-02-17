@@ -47,7 +47,7 @@ export default class Fetch extends Component {
       const { status, data, err } = this.state
 
       // function-as-child support
-      if (this.props.children) {
+      if (typeof this.props.children === 'function') {
         return this.props.children({status, data, err})
       }
   

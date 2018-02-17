@@ -24,10 +24,16 @@
   },
   "homepage": "https://github.com/mikeLspohn/react-fetch#readme",
   "dependencies": {
+    "@babel/core": "^7.0.0-beta.40",
+    "@babel/preset-env": "^7.0.0-beta.40",
     "prop-types": "^15.6.0",
     "react": "^16.2.0"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.40",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.40",
+    "@babel/preset-react": "^7.0.0-beta.40",
+    "rollup-plugin-babel": "^4.0.0-beta.0",
     "rollup-plugin-commonjs": "^8.3.0",
     "rollup-plugin-node-resolve": "^3.0.3"
   }
