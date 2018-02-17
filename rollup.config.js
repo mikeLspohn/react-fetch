@@ -5,7 +5,6 @@ import babel from 'rollup-plugin-babel'
 
 const namedExports = {
   './node_modules/react/index.js': ['Component']
-
 }
 
 export default [
