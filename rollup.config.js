@@ -23,21 +23,26 @@ export default [
         }
       }) // so Rollup can convert `ms` to an ES module
     ]
-  }
-//   },
+  },
 
-//     // esm/cjs builds
-//   {
-//     input: 'src/react-fetch.js',
-//     external: ['ms'],
-//     output: [
-//      { file: pkg.main, format: 'cjs' },
-//      { file: pkg.module, format: 'es' }
-//     ],
-//     plugins: [
-//       babel({
-//         exclude: 'node_modules/**'
-//       })
-//     ]
-//   }
+    // esm/cjs builds
+  {
+    input: 'src/react-fetch.js',
+    external: ['ms'],
+    output: [
+      { file: pkg.main, format: 'cjs' },
+      { file: pkg.module, format: 'es' }
+    ],
+    plugins: [
+      babel({
+        exclude: 'node_modules/**'
+      }),
+      resolve({module: true}),
+      commonjs({
+        namedExports: {
+          './node_modules/react/index.js': ['Component']
+        }
+      })
+    ]
+  }
 ]
