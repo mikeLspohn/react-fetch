@@ -1,3 +1,10 @@
 {
-  "extends": "standard"
+  "extends": ["standard", "plugin:react/recommended"],
+  "parser": "babel-eslint",
+  "plugins": ["react"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  }
 }
