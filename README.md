@@ -14,9 +14,9 @@ or
 
 With Script Tag
 
-  * git clone https://github.com/mikelspohn/react-fetch.git
-  * cp ./react-fetch/dist/react-fetch/umd.js path/to/project // copy umd build to your project
-  * <script src='./react-fetch.umd.js'></script>
+  * `git clone https://github.com/mikelspohn/react-fetch.git`
+  * `cp ./react-fetch/dist/react-fetch/umd.js path/to/project` // copy umd build to your project
+  * `<script src='./react-fetch.umd.js'></script>`
 
 __you can install by specific tag version e.g. @mikelspohn/react-fetch@0.1.0__
 

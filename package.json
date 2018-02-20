@@ -1,6 +1,6 @@
 {
   "name": "@mikelspohn/react-fetch",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Fetch component for react applications",
   "main": "dist/react-fetch.cjs.js",
   "browser": "dist/react-fetch.umd.js",
