@@ -25,12 +25,44 @@ export default [
     ]
   },
 
+  {
+    input: 'src/react-fetch-hoc.js',
+    output: {
+      name: 'hoc',
+      file: pkg.browser,
+      format: 'umd'
+    },
+    plugins: [
+      babel({
+        exclude: 'node_modules/**'
+      }),
+      resolve(),
+      commonjs({ namedExports })
+    ]
+  },
+
   // esm/cjs builds
   {
     input: 'src/react-fetch.js',
     output: [
       { file: pkg.main, format: 'cjs' },
       { file: pkg.module, format: 'es' }
+    ],
+    plugins: [
+      babel({
+        exclude: 'node_modules/**'
+      }),
+      resolve({module: true}),
+      commonjs({ namedExports })
+    ]
+  },
+
+  // esm/cjs builds
+  {
+    input: 'src/react-fetch-hoc.js',
+    output: [
+      { file: 'dist/hoc', format: 'cjs' },
+      { file: 'dist/hoc', format: 'es' }
     ],
     plugins: [
       babel({

@@ -1,5 +1,75 @@
 'use strict';
 
+Object.defineProperty(exports, '__esModule', { value: true });
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (typeof call === "object" || typeof call === "function")) {
+    return call;
+  }
+
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
@@ -2282,74 +2352,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 });
 
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
-  }
-}
-
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
-}
-
-function _extends() {
-  _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function");
-  }
-
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      enumerable: false,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-}
-
-function _possibleConstructorReturn(self, call) {
-  if (call && (typeof call === "object" || typeof call === "function")) {
-    return call;
-  }
-
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return self;
-}
-
 var Fetch =
 /*#__PURE__*/
 function (_Component) {
@@ -2359,6 +2361,7 @@ function (_Component) {
     var _this;
 
     _classCallCheck(this, Fetch);
+
     _this = _possibleConstructorReturn(this, (Fetch.__proto__ || Object.getPrototypeOf(Fetch)).call(this));
     _this.state = {
       data: null,
@@ -2377,11 +2380,13 @@ function (_Component) {
       var _props = this.props,
           url = _props.url,
           fetchOptions = _props.fetchOptions;
+
       var mergedOptions = _extends({}, Fetch.defaultOptions, fetchOptions);
+
       this.setState({
         status: 'Loading'
       }, function () {
-        fetch(url, mergedOptions).then(function (res) {
+        window.fetch(url, mergedOptions).then(function (res) {
           return res.json();
         }).then(function (data) {
           return _this2.setState({
@@ -2423,11 +2428,13 @@ function (_Component) {
       var Initial = initial;
       var Success = success;
       var Failure = failure;
-      var Loading = Loading;
+      var Loading = loading;
 
       switch (status) {
         case 'Initial':
-          return react.createElement(Initial, null);
+          return function () {
+            return react.createElement(Initial, null);
+          };
 
         case 'Loading':
           return react.createElement(Loading, null);
@@ -2449,8 +2456,10 @@ function (_Component) {
       }
     }
   }]);
+
   return Fetch;
-}(react_1);
+}(react_1); // HOC support
+
 
 Object.defineProperty(Fetch, "propTypes", {
   configurable: true,
@@ -2463,7 +2472,8 @@ Object.defineProperty(Fetch, "propTypes", {
     loading: propTypes.func,
     failure: propTypes.func,
     initial: propTypes.func,
-    success: propTypes.func
+    success: propTypes.func,
+    children: propTypes.oneOf([propTypes.func])
   }
 });
 Object.defineProperty(Fetch, "defaultProps", {
@@ -2485,5 +2495,112 @@ Object.defineProperty(Fetch, "defaultOptions", {
     }
   }
 });
+var withData = function withData(hocProps) {
+  return function (WrappedComponent) {
+    var Fetch =
+    /*#__PURE__*/
+    function (_Component2) {
+      _inherits(Fetch, _Component2);
 
-module.exports = Fetch;
+      function Fetch() {
+        var _this3;
+
+        _classCallCheck(this, Fetch);
+
+        _this3 = _possibleConstructorReturn(this, (Fetch.__proto__ || Object.getPrototypeOf(Fetch)).call(this));
+        _this3.state = {
+          data: null,
+          err: null,
+          status: 'Initial' // 'Initial' | 'Loading' | 'Success' | 'Failure'
+
+        };
+        return _this3;
+      }
+
+      _createClass(Fetch, [{
+        key: "componentDidMount",
+        value: function componentDidMount() {
+          var _this4 = this;
+
+          var _props3 = this.props,
+              url = _props3.url,
+              fetchOptions = _props3.fetchOptions;
+
+          var mergedOptions = _extends({}, Fetch.defaultOptions, fetchOptions);
+
+          this.setState({
+            status: 'Loading'
+          }, function () {
+            window.fetch(url, mergedOptions).then(function (res) {
+              return res.json();
+            }).then(function (data) {
+              return _this4.setState({
+                data: data,
+                status: 'Success'
+              });
+            }).catch(function (err) {
+              return _this4.setState({
+                err: err,
+                status: 'Failure'
+              });
+            });
+          });
+        }
+      }, {
+        key: "render",
+        value: function render() {
+          var _state2 = this.state,
+              status = _state2.status,
+              data = _state2.data,
+              err = _state2.err;
+          return react.createElement(WrappedComponent, {
+            fetchStatus: status,
+            fetchData: data,
+            fetchErr: err
+          });
+        }
+      }]);
+
+      return Fetch;
+    }(react_1);
+
+    Object.defineProperty(Fetch, "propTypes", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: {
+        url: propTypes.string.isRequired,
+        fetchOptions: propTypes.object.isRequired,
+        // @TODO: set shape to correct config shape for warning help
+        loading: propTypes.func,
+        failure: propTypes.func,
+        initial: propTypes.func,
+        success: propTypes.func,
+        children: propTypes.oneOf([propTypes.func])
+      }
+    });
+    Object.defineProperty(Fetch, "defaultProps", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: {
+        fetchOptions: Fetch.defaultOptions
+      }
+    });
+    Object.defineProperty(Fetch, "defaultOptions", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: {
+        method: 'get',
+        headers: {
+          'content-type': 'application/json'
+        }
+      }
+    });
+    return Fetch;
+  };
+};
+
+exports.default = Fetch;
+exports.withData = withData;
