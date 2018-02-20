@@ -29,7 +29,7 @@ export default [
     input: 'src/react-fetch-hoc.js',
     output: {
       name: 'hoc',
-      file: pkg.browser,
+      file: 'dist/hoc.umd.js',
       format: 'umd'
     },
     plugins: [
@@ -61,8 +61,8 @@ export default [
   {
     input: 'src/react-fetch-hoc.js',
     output: [
-      { file: 'dist/hoc', format: 'cjs' },
-      { file: 'dist/hoc', format: 'es' }
+      { file: 'dist/hoc.cjs.js', format: 'cjs' },
+      { file: 'dist/hoc.esm.js', format: 'es' }
     ],
     plugins: [
       babel({

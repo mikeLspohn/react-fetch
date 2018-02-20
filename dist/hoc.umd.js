@@ -1,3 +1,9 @@
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global.hoc = factory());
+}(this, (function () { 'use strict';
+
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -2348,147 +2354,113 @@ if (process.env.NODE_ENV !== 'production') {
 }
 });
 
-var Fetch =
-/*#__PURE__*/
-function (_Component) {
-  _inherits(Fetch, _Component);
+function withData(hocProps) {
+  return function (WrappedComponent) {
+    var Fetch =
+    /*#__PURE__*/
+    function (_Component) {
+      _inherits(Fetch, _Component);
 
-  function Fetch() {
-    var _this;
+      function Fetch() {
+        var _this;
 
-    _classCallCheck(this, Fetch);
+        _classCallCheck(this, Fetch);
 
-    _this = _possibleConstructorReturn(this, (Fetch.__proto__ || Object.getPrototypeOf(Fetch)).call(this));
-    _this.state = {
-      data: null,
-      err: null,
-      status: 'Initial' // 'Initial' | 'Loading' | 'Success' | 'Failure'
+        _this = _possibleConstructorReturn(this, (Fetch.__proto__ || Object.getPrototypeOf(Fetch)).call(this));
+        _this.state = {
+          data: null,
+          err: null,
+          status: 'Initial' // 'Initial' | 'Loading' | 'Success' | 'Failure'
 
-    };
-    return _this;
-  }
-
-  _createClass(Fetch, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      var _props = this.props,
-          url = _props.url,
-          fetchOptions = _props.fetchOptions;
-
-      var mergedOptions = _extends({}, Fetch.defaultOptions, fetchOptions);
-
-      this.setState({
-        status: 'Loading'
-      }, function () {
-        window.fetch(url, mergedOptions).then(function (res) {
-          return res.json();
-        }).then(function (data) {
-          return _this2.setState({
-            data: data,
-            status: 'Success'
-          });
-        }).catch(function (err) {
-          return _this2.setState({
-            err: err,
-            status: 'Failure'
-          });
-        });
-      });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _state = this.state,
-          status = _state.status,
-          data = _state.data,
-          err = _state.err; // function-as-child support
-
-      if (typeof this.props.children === 'function') {
-        return this.props.children({
-          status: status,
-          data: data,
-          err: err
-        });
-      } // @TODO: Add render-prop support
-      // @TODO: Add HOC support
-      // Component Injection Support
-
-
-      var _props2 = this.props,
-          loading = _props2.loading,
-          failure = _props2.failure,
-          initial = _props2.initial,
-          success = _props2.success;
-      var Initial = initial;
-      var Success = success;
-      var Failure = failure;
-      var Loading = loading;
-
-      switch (status) {
-        case 'Initial':
-          return function () {
-            return react.createElement(Initial, null);
-          };
-
-        case 'Loading':
-          return react.createElement(Loading, null);
-
-        case 'Success':
-          return react.createElement(Success, {
-            data: data
-          });
-
-        case 'Failure':
-          return react.createElement(Failure, {
-            error: err
-          });
-
-        default:
-          return react.createElement(Failure, {
-            error: "something went wrong"
-          });
+        };
+        return _this;
       }
-    }
-  }]);
 
-  return Fetch;
-}(react_1);
+      _createClass(Fetch, [{
+        key: "componentDidMount",
+        value: function componentDidMount() {
+          var _this2 = this;
 
-Object.defineProperty(Fetch, "propTypes", {
-  configurable: true,
-  enumerable: true,
-  writable: true,
-  value: {
-    url: propTypes.string.isRequired,
-    fetchOptions: propTypes.object.isRequired,
-    // @TODO: set shape to correct config shape for warning help
-    loading: propTypes.func,
-    failure: propTypes.func,
-    initial: propTypes.func,
-    success: propTypes.func,
-    children: propTypes.oneOf([propTypes.func])
-  }
-});
-Object.defineProperty(Fetch, "defaultProps", {
-  configurable: true,
-  enumerable: true,
-  writable: true,
-  value: {
-    fetchOptions: Fetch.defaultOptions
-  }
-});
-Object.defineProperty(Fetch, "defaultOptions", {
-  configurable: true,
-  enumerable: true,
-  writable: true,
-  value: {
-    method: 'get',
-    headers: {
-      'content-type': 'application/json'
-    }
-  }
-});
+          var _props = this.props,
+              url = _props.url,
+              fetchOptions = _props.fetchOptions;
 
-export default Fetch;
+          var mergedOptions = _extends({}, Fetch.defaultOptions, fetchOptions);
+
+          this.setState({
+            status: 'Loading'
+          }, function () {
+            window.fetch(url, mergedOptions).then(function (res) {
+              return res.json();
+            }).then(function (data) {
+              return _this2.setState({
+                data: data,
+                status: 'Success'
+              });
+            }).catch(function (err) {
+              return _this2.setState({
+                err: err,
+                status: 'Failure'
+              });
+            });
+          });
+        }
+      }, {
+        key: "render",
+        value: function render() {
+          var _state = this.state,
+              status = _state.status,
+              data = _state.data,
+              err = _state.err;
+          return react.createElement(WrappedComponent, {
+            fetchStatus: status,
+            fetchData: data,
+            fetchErr: err
+          });
+        }
+      }]);
+
+      return Fetch;
+    }(Component);
+
+    Object.defineProperty(Fetch, "propTypes", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: {
+        url: propTypes.string.isRequired,
+        fetchOptions: propTypes.object.isRequired,
+        // @TODO: set shape to correct config shape for warning help
+        loading: propTypes.func,
+        failure: propTypes.func,
+        initial: propTypes.func,
+        success: propTypes.func,
+        children: propTypes.oneOf([propTypes.func])
+      }
+    });
+    Object.defineProperty(Fetch, "defaultProps", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: {
+        fetchOptions: Fetch.defaultOptions
+      }
+    });
+    Object.defineProperty(Fetch, "defaultOptions", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: {
+        method: 'get',
+        headers: {
+          'content-type': 'application/json'
+        }
+      }
+    });
+    return Fetch;
+  };
+}
+
+return withData;
+
+})));

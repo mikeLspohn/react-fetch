@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-	typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	(factory((global['react-fetch'] = {})));
-}(this, (function (exports) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global['react-fetch'] = factory());
+}(this, (function () { 'use strict';
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -2460,8 +2460,7 @@ function (_Component) {
   }]);
 
   return Fetch;
-}(react_1); // HOC support
-
+}(react_1);
 
 Object.defineProperty(Fetch, "propTypes", {
   configurable: true,
@@ -2497,116 +2496,7 @@ Object.defineProperty(Fetch, "defaultOptions", {
     }
   }
 });
-var withData = function withData(hocProps) {
-  return function (WrappedComponent) {
-    var Fetch =
-    /*#__PURE__*/
-    function (_Component2) {
-      _inherits(Fetch, _Component2);
 
-      function Fetch() {
-        var _this3;
-
-        _classCallCheck(this, Fetch);
-
-        _this3 = _possibleConstructorReturn(this, (Fetch.__proto__ || Object.getPrototypeOf(Fetch)).call(this));
-        _this3.state = {
-          data: null,
-          err: null,
-          status: 'Initial' // 'Initial' | 'Loading' | 'Success' | 'Failure'
-
-        };
-        return _this3;
-      }
-
-      _createClass(Fetch, [{
-        key: "componentDidMount",
-        value: function componentDidMount() {
-          var _this4 = this;
-
-          var _props3 = this.props,
-              url = _props3.url,
-              fetchOptions = _props3.fetchOptions;
-
-          var mergedOptions = _extends({}, Fetch.defaultOptions, fetchOptions);
-
-          this.setState({
-            status: 'Loading'
-          }, function () {
-            window.fetch(url, mergedOptions).then(function (res) {
-              return res.json();
-            }).then(function (data) {
-              return _this4.setState({
-                data: data,
-                status: 'Success'
-              });
-            }).catch(function (err) {
-              return _this4.setState({
-                err: err,
-                status: 'Failure'
-              });
-            });
-          });
-        }
-      }, {
-        key: "render",
-        value: function render() {
-          var _state2 = this.state,
-              status = _state2.status,
-              data = _state2.data,
-              err = _state2.err;
-          return react.createElement(WrappedComponent, {
-            fetchStatus: status,
-            fetchData: data,
-            fetchErr: err
-          });
-        }
-      }]);
-
-      return Fetch;
-    }(react_1);
-
-    Object.defineProperty(Fetch, "propTypes", {
-      configurable: true,
-      enumerable: true,
-      writable: true,
-      value: {
-        url: propTypes.string.isRequired,
-        fetchOptions: propTypes.object.isRequired,
-        // @TODO: set shape to correct config shape for warning help
-        loading: propTypes.func,
-        failure: propTypes.func,
-        initial: propTypes.func,
-        success: propTypes.func,
-        children: propTypes.oneOf([propTypes.func])
-      }
-    });
-    Object.defineProperty(Fetch, "defaultProps", {
-      configurable: true,
-      enumerable: true,
-      writable: true,
-      value: {
-        fetchOptions: Fetch.defaultOptions
-      }
-    });
-    Object.defineProperty(Fetch, "defaultOptions", {
-      configurable: true,
-      enumerable: true,
-      writable: true,
-      value: {
-        method: 'get',
-        headers: {
-          'content-type': 'application/json'
-        }
-      }
-    });
-    return Fetch;
-  };
-};
-
-exports.default = Fetch;
-exports.withData = withData;
-
-Object.defineProperty(exports, '__esModule', { value: true });
+return Fetch;
 
 })));

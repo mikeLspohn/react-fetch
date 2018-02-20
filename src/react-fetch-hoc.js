@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 // HOC support
-export const withData = hocProps => {
+export default function withData (hocProps) {
     return WrappedComponent => {
       class Fetch extends Component {
         static propTypes = {
