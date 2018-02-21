@@ -6,5 +6,9 @@
     "ecmaFeatures": {
       "jsx": true
     }
+  },
+  "globals": {
+    "test": true,
+    "expect": true
   }
 }

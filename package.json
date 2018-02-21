@@ -53,6 +53,9 @@
     "rollup-plugin-node-resolve": "^3.0.3"
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "./test-setup.js"
+    "setupTestFrameworkScriptFile": "./test-setup.js",
+    "transform": {
+      "^.+\\.js?$": "babel-jest"
+    }
   }
 }
