@@ -28,7 +28,7 @@ export default class Fetch extends Component {
   static initial = 'Initial'
   static loading = 'Loading'
   static success = 'Success'
-  static failure = 'failure'
+  static failure = 'Failure'
 
   constructor () {
     super()
