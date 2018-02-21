@@ -1,3 +1,6 @@
+# 0.3.2: 02-20-2018
+  * Fix children proptypes check to be oneOfType
+ 
 # 0.3.1: 02-20-2018
   * Change fetchOptions prop name to options. Cleanup code.
  

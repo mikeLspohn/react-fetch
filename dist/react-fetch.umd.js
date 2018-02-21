@@ -2486,7 +2486,7 @@ Object.defineProperty(Fetch, "propTypes", {
     failure: propTypes.func,
     initial: propTypes.func,
     success: propTypes.func,
-    children: propTypes.oneOf([propTypes.func, propTypes.node]),
+    children: propTypes.oneOfType([propTypes.func, propTypes.node]),
     render: propTypes.func
   }
 });

@@ -10,7 +10,7 @@ export default class Fetch extends Component {
     failure: PropTypes.func,
     initial: PropTypes.func,
     success: PropTypes.func,
-    children: PropTypes.oneOf([PropTypes.func, PropTypes.node]),
+    children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
     render: PropTypes.func
   }
 
