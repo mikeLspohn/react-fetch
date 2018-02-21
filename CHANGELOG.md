@@ -1,3 +1,6 @@
+# 0.3.1: 02-20-2018
+  * Change fetchOptions prop name to options. Cleanup code.
+ 
 # 0.3.0: 02-20-2018
   * Add support for render prop (actual prop named render)
 
