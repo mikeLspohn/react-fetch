@@ -6,7 +6,7 @@
   "browser": "dist/react-fetch.umd.js",
   "module": "dist/react-fetch.esm.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -24,12 +24,16 @@
   },
   "homepage": "https://github.com/mikeLspohn/react-fetch#readme",
   "dependencies": {
-    "@babel/core": "^7.0.0-beta.40",
-    "@babel/preset-env": "^7.0.0-beta.40",
     "prop-types": "^15.6.0",
     "react": "^16.2.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0-beta.40",
+    "regenerator-runtime": "^0.11.1",
+    "@babel/preset-env": "^7.0.0-beta.40",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^22.4.0",
+    "jest": "^22.4.0",
     "@babel/plugin-proposal-class-properties": "^7.0.0-beta.40",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.40",
     "@babel/preset-react": "^7.0.0-beta.40",
