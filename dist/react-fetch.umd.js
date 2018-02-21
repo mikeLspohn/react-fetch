@@ -2531,7 +2531,7 @@ Object.defineProperty(Fetch, "failure", {
   configurable: true,
   enumerable: true,
   writable: true,
-  value: 'failure'
+  value: 'Failure'
 });
 
 return Fetch;

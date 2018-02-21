@@ -1,3 +1,6 @@
+# 0.3.3: 02-20-2018
+  * Setup jest testing framework and added tests
+ 
 # 0.3.2: 02-20-2018
   * Fix children proptypes check to be oneOfType
  

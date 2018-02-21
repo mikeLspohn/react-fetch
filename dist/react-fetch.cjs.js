@@ -2527,7 +2527,7 @@ Object.defineProperty(Fetch, "failure", {
   configurable: true,
   enumerable: true,
   writable: true,
-  value: 'failure'
+  value: 'Failure'
 });
 
 module.exports = Fetch;
