@@ -2375,9 +2375,9 @@ function (_Component) {
 
       var _props = this.props,
           url = _props.url,
-          fetchOptions = _props.fetchOptions;
+          options = _props.options;
 
-      var mergedOptions = _extends({}, Fetch.defaultOptions, fetchOptions);
+      var mergedOptions = _extends({}, Fetch.defaultOptions, options);
 
       this.setState({
         status: Fetch.loading
@@ -2474,7 +2474,7 @@ Object.defineProperty(Fetch, "propTypes", {
   writable: true,
   value: {
     url: propTypes.string.isRequired,
-    fetchOptions: propTypes.object.isRequired,
+    options: propTypes.object.isRequired,
     // @TODO: set shape to correct config shape for warning help
     loading: propTypes.func,
     failure: propTypes.func,
@@ -2489,7 +2489,7 @@ Object.defineProperty(Fetch, "defaultProps", {
   enumerable: true,
   writable: true,
   value: {
-    fetchOptions: Fetch.defaultOptions
+    options: Fetch.defaultOptions
   }
 });
 Object.defineProperty(Fetch, "defaultOptions", {
