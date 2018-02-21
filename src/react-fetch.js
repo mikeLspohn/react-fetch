@@ -1,16 +1,18 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+const CompOrFunc = PropTypes.oneOfType([PropTypes.func, PropTypes.node])
+
 // Function as Child/Component Injection Support
 export default class Fetch extends Component {
   static propTypes = {
     url: PropTypes.string.isRequired,
     options: PropTypes.object.isRequired, // @TODO: set shape to correct config shape for warning help
-    loading: PropTypes.func,
-    failure: PropTypes.func,
-    initial: PropTypes.func,
-    success: PropTypes.func,
-    children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    loading: CompOrFunc, // Component, Should be node probably?
+    failure: CompOrFunc,
+    initial: CompOrFunc,
+    success: CompOrFunc,
+    children: CompOrFunc,
     render: PropTypes.func
   }
 
@@ -37,14 +39,29 @@ export default class Fetch extends Component {
       error: null,
       status: Fetch.initial // one of Fetch.statusType
     }
+
+    this.fetchData = this.fetchData.bind(this)
+    this.getOptions = this.getOptions.bind(this)
   }
 
   componentDidMount () {
-    const { url, options } = this.props
-    const mergedOptions = {...Fetch.defaultOptions, ...options}
+    this.fetchData(this.props.url)
+  }
 
+  componentDidUpdate (prevProps, prevState) {
+    const { url } = this.props
+    if (prevProps.url !== url) {
+      this.fetchData(url, this.getOptions())
+    }
+  }
+
+  getOptions () {
+    return {...Fetch.defaultOptions, ...this.props.options}
+  }
+
+  fetchData (url) {
     this.setState({status: Fetch.loading}, () => {
-      window.fetch(url, mergedOptions)
+      window.fetch(url, this.getOptions())
         .then(res => res.json())
         .then(data => this.setState({data, status: Fetch.success}))
         .catch(error => this.setState({error, status: Fetch.failure}))

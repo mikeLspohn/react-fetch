@@ -56,4 +56,25 @@ describe('function-as-children', () => {
       expect(Wrapper.update().html()).toBe('<p>Failure</p>')
     }
   })
+
+  test('refetches if url prop changes', async () => {
+    window.fetch = successFetch
+    const spy = jest.spyOn(window, 'fetch')
+
+    const Wrapper = await shallow(
+      <Fetch url='/employees' options={{}}>
+        {({status}) => <p>{status}</p>}
+      </Fetch>
+    )
+
+    await Wrapper.instance().fetchData()
+
+    expect(Wrapper.state().status).toBe('Success')
+
+    Wrapper.setProps({url: 'something-new'})
+
+    expect(Wrapper.state().status).toBe('Loading')
+    expect(spy.mock.calls[2][0]).toBe('something-new')
+    spy.mockRestore()
+  })
 })

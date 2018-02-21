@@ -56,6 +56,14 @@ function _inherits(subClass, superClass) {
   if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 }
 
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
 function _possibleConstructorReturn(self, call) {
   if (call && (typeof call === "object" || typeof call === "function")) {
     return call;
@@ -2350,6 +2358,8 @@ if (process.env.NODE_ENV !== 'production') {
 }
 });
 
+var CompOrFunc = propTypes.oneOfType([propTypes.func, propTypes.node]); // Function as Child/Component Injection Support
+
 var Fetch =
 /*#__PURE__*/
 function (_Component) {
@@ -2367,24 +2377,39 @@ function (_Component) {
       status: Fetch.initial // one of Fetch.statusType
 
     };
+    _this.fetchData = _this.fetchData.bind(_assertThisInitialized(_this));
+    _this.getOptions = _this.getOptions.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(Fetch, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      this.fetchData(this.props.url);
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState) {
+      var url = this.props.url;
+
+      if (prevProps.url !== url) {
+        this.fetchData(url, this.getOptions());
+      }
+    }
+  }, {
+    key: "getOptions",
+    value: function getOptions() {
+      return _extends({}, Fetch.defaultOptions, this.props.options);
+    }
+  }, {
+    key: "fetchData",
+    value: function fetchData(url) {
       var _this2 = this;
-
-      var _props = this.props,
-          url = _props.url,
-          options = _props.options;
-
-      var mergedOptions = _extends({}, Fetch.defaultOptions, options);
 
       this.setState({
         status: Fetch.loading
       }, function () {
-        window.fetch(url, mergedOptions).then(function (res) {
+        window.fetch(url, _this2.getOptions()).then(function (res) {
           return res.json();
         }).then(function (data) {
           return _this2.setState({
@@ -2406,9 +2431,9 @@ function (_Component) {
           status = _state.status,
           data = _state.data,
           error = _state.error;
-      var _props2 = this.props,
-          children = _props2.children,
-          render = _props2.render; // function-as-child support
+      var _props = this.props,
+          children = _props.children,
+          render = _props.render; // function-as-child support
 
       if (typeof children === 'function') {
         return children({
@@ -2432,11 +2457,11 @@ function (_Component) {
       } // Component Injection Support
 
 
-      var _props3 = this.props,
-          loading = _props3.loading,
-          failure = _props3.failure,
-          initial = _props3.initial,
-          success = _props3.success;
+      var _props2 = this.props,
+          loading = _props2.loading,
+          failure = _props2.failure,
+          initial = _props2.initial,
+          success = _props2.success;
       var Initial = initial;
       var Success = success;
       var Failure = failure;
@@ -2478,11 +2503,12 @@ Object.defineProperty(Fetch, "propTypes", {
     url: propTypes.string.isRequired,
     options: propTypes.object.isRequired,
     // @TODO: set shape to correct config shape for warning help
-    loading: propTypes.func,
-    failure: propTypes.func,
-    initial: propTypes.func,
-    success: propTypes.func,
-    children: propTypes.oneOfType([propTypes.func, propTypes.node]),
+    loading: CompOrFunc,
+    // Component, Should be node probably?
+    failure: CompOrFunc,
+    initial: CompOrFunc,
+    success: CompOrFunc,
+    children: CompOrFunc,
     render: propTypes.func
   }
 });
