@@ -1,3 +1,6 @@
+# 0.3.0: 02-20-2018
+  * Add support for render prop (actual prop named render)
+
 # 0.2.3: 02-20-2018
   * Fix formatting in README installation section
 

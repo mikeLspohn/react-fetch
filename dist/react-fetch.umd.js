@@ -2367,8 +2367,8 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, (Fetch.__proto__ || Object.getPrototypeOf(Fetch)).call(this));
     _this.state = {
       data: null,
-      err: null,
-      status: 'Initial' // 'Initial' | 'Loading' | 'Success' | 'Failure'
+      error: null,
+      status: Fetch.initial // one of Fetch.statusType
 
     };
     return _this;
@@ -2386,19 +2386,19 @@ function (_Component) {
       var mergedOptions = _extends({}, Fetch.defaultOptions, fetchOptions);
 
       this.setState({
-        status: 'Loading'
+        status: Fetch.loading
       }, function () {
         window.fetch(url, mergedOptions).then(function (res) {
           return res.json();
         }).then(function (data) {
           return _this2.setState({
             data: data,
-            status: 'Success'
+            status: Fetch.success
           });
-        }).catch(function (err) {
+        }).catch(function (error) {
           return _this2.setState({
-            err: err,
-            status: 'Failure'
+            error: error,
+            status: Fetch.failure
           });
         });
       });
@@ -2409,24 +2409,38 @@ function (_Component) {
       var _state = this.state,
           status = _state.status,
           data = _state.data,
-          err = _state.err; // function-as-child support
+          error = _state.error;
+      var _props2 = this.props,
+          children = _props2.children,
+          render = _props2.render; // function-as-child support
 
-      if (typeof this.props.children === 'function') {
-        return this.props.children({
+      if (typeof children === 'function') {
+        return children({
           status: status,
           data: data,
-          err: err
+          error: error
         });
       } // @TODO: Add render-prop support
-      // @TODO: Add HOC support
-      // Component Injection Support
 
 
-      var _props2 = this.props,
-          loading = _props2.loading,
-          failure = _props2.failure,
-          initial = _props2.initial,
-          success = _props2.success;
+      if (render && typeof render !== 'function') {
+        throw Error('Render must be a function. (Hint - render-prop!)');
+      }
+
+      if (render) {
+        return render({
+          status: status,
+          data: data,
+          error: error
+        });
+      } // Component Injection Support
+
+
+      var _props3 = this.props,
+          loading = _props3.loading,
+          failure = _props3.failure,
+          initial = _props3.initial,
+          success = _props3.success;
       var Initial = initial;
       var Success = success;
       var Failure = failure;
@@ -2434,9 +2448,7 @@ function (_Component) {
 
       switch (status) {
         case 'Initial':
-          return function () {
-            return react.createElement(Initial, null);
-          };
+          return react.createElement(Initial, null);
 
         case 'Loading':
           return react.createElement(Loading, null);
@@ -2448,7 +2460,7 @@ function (_Component) {
 
         case 'Failure':
           return react.createElement(Failure, {
-            error: err
+            error: error
           });
 
         default:
@@ -2474,7 +2486,8 @@ Object.defineProperty(Fetch, "propTypes", {
     failure: propTypes.func,
     initial: propTypes.func,
     success: propTypes.func,
-    children: propTypes.oneOf([propTypes.func])
+    children: propTypes.oneOf([propTypes.func, propTypes.node]),
+    render: propTypes.func
   }
 });
 Object.defineProperty(Fetch, "defaultProps", {
@@ -2495,6 +2508,30 @@ Object.defineProperty(Fetch, "defaultOptions", {
       'content-type': 'application/json'
     }
   }
+});
+Object.defineProperty(Fetch, "initial", {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  value: 'Initial'
+});
+Object.defineProperty(Fetch, "loading", {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  value: 'Loading'
+});
+Object.defineProperty(Fetch, "success", {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  value: 'Success'
+});
+Object.defineProperty(Fetch, "failure", {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  value: 'failure'
 });
 
 return Fetch;

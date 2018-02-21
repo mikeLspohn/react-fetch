@@ -10,7 +10,8 @@ export default class Fetch extends Component {
     failure: PropTypes.func,
     initial: PropTypes.func,
     success: PropTypes.func,
-    children: PropTypes.oneOf([PropTypes.func])
+    children: PropTypes.oneOf([PropTypes.func, PropTypes.node]),
+    render: PropTypes.func
   }
 
   static defaultProps = {
@@ -24,12 +25,17 @@ export default class Fetch extends Component {
     }
   }
 
+  static initial = 'Initial'
+  static loading = 'Loading'
+  static success = 'Success'
+  static failure = 'failure'
+
   constructor () {
     super()
     this.state = {
       data: null,
-      err: null,
-      status: 'Initial' // 'Initial' | 'Loading' | 'Success' | 'Failure'
+      error: null,
+      status: Fetch.initial // one of Fetch.statusType
     }
   }
 
@@ -37,26 +43,33 @@ export default class Fetch extends Component {
     const { url, fetchOptions } = this.props
     const mergedOptions = {...Fetch.defaultOptions, ...fetchOptions}
 
-    this.setState({status: 'Loading'}, () => {
+    this.setState({status: Fetch.loading}, () => {
       window.fetch(url, mergedOptions)
         .then(res => res.json())
-        .then(data => this.setState({data, status: 'Success'}))
-        .catch(err => this.setState({err, status: 'Failure'}))
+        .then(data => this.setState({data, status: Fetch.success}))
+        .catch(error => this.setState({error, status: Fetch.failure}))
     })
   }
 
   render () {
-    const { status, data, err } = this.state
+    const { status, data, error } = this.state
+    const { children, render } = this.props
 
-      // function-as-child support
-    if (typeof this.props.children === 'function') {
-      return this.props.children({status, data, err})
+    // function-as-child support
+    if (typeof children === 'function') {
+      return children({status, data, error})
     }
 
-      // @TODO: Add render-prop support
-      // @TODO: Add HOC support
+    // @TODO: Add render-prop support
+    if (render && typeof render !== 'function') {
+      throw Error('Render must be a function. (Hint - render-prop!)')
+    }
 
-      // Component Injection Support
+    if (render) {
+      return render({status, data, error})
+    }
+
+    // Component Injection Support
     const { loading, failure, initial, success } = this.props
     const Initial = initial
     const Success = success
@@ -65,13 +78,13 @@ export default class Fetch extends Component {
 
     switch (status) {
       case 'Initial':
-        return () => <Initial />
+        return <Initial />
       case 'Loading':
         return <Loading />
       case 'Success':
         return <Success data={data} />
       case 'Failure':
-        return <Failure error={err} />
+        return <Failure error={error} />
       default:
         return <Failure error='something went wrong' />
     }
