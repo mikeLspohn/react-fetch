@@ -1,3 +1,7 @@
+# 0.3.4: 02-20-2018
+  * modularize fetch calls. refetch if url props changes
+  * add new tests
+
 # 0.3.3: 02-20-2018
   * Setup jest testing framework and added tests
  
