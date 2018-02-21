@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 export default class Fetch extends Component {
   static propTypes = {
     url: PropTypes.string.isRequired,
-    fetchOptions: PropTypes.object.isRequired, // @TODO: set shape to correct config shape for warning help
+    options: PropTypes.object.isRequired, // @TODO: set shape to correct config shape for warning help
     loading: PropTypes.func,
     failure: PropTypes.func,
     initial: PropTypes.func,
@@ -15,7 +15,7 @@ export default class Fetch extends Component {
   }
 
   static defaultProps = {
-    fetchOptions: Fetch.defaultOptions
+    options: Fetch.defaultOptions
   }
 
   static defaultOptions = {
@@ -40,8 +40,8 @@ export default class Fetch extends Component {
   }
 
   componentDidMount () {
-    const { url, fetchOptions } = this.props
-    const mergedOptions = {...Fetch.defaultOptions, ...fetchOptions}
+    const { url, options } = this.props
+    const mergedOptions = {...Fetch.defaultOptions, ...options}
 
     this.setState({status: Fetch.loading}, () => {
       window.fetch(url, mergedOptions)

@@ -30,7 +30,7 @@ import Feth from '@mikelspohn/react-fetch'
 export const FetchExample = props => (
   <Fetch url='http://localhost:3001/employees'>
     {
-        ({status, data, err}) => {
+        ({status, data, error}) => {
           switch (status) {
             case 'Initial':
               return null
@@ -39,7 +39,7 @@ export const FetchExample = props => (
             case 'Success':
               return <p>{JSON.stringify(data)}</p>
             case 'Failure':
-              return <p style={{color: 'red'}}>Error: {JSON.stringify(err)}</p>
+              return <p style={{color: 'red'}}>Error: {JSON.stringify(error)}</p>
             default:
               return <p>Something went wrong</p>
           }
@@ -47,6 +47,13 @@ export const FetchExample = props => (
     }
   </Fetch>
 )
+
+// Render Props usage
+<Fetch
+  url='/employees'
+  options={}
+  render={({status, data, error}) => <p>{status}</p>}
+>
 
 // Other Usage passing components for status states
 //
