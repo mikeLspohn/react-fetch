@@ -1,12 +1,13 @@
 {
   "name": "@mikelspohn/react-fetch",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Fetch component for react applications",
   "main": "dist/react-fetch.cjs.js",
   "browser": "dist/react-fetch.umd.js",
   "module": "dist/react-fetch.esm.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint src/*.js"
   },
   "repository": {
     "type": "git",
@@ -39,7 +40,7 @@
     "babel-jest": "^22.4.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "eslint": "3.x",
+    "eslint": "^4.18.1",
     "eslint-config-standard": "^11.0.0-beta.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-node": "^6.0.0",

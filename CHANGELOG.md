@@ -1,4 +1,7 @@
-# 0.4.2: 02-20-2018
+# 0.4.3: 02-21-2018
+  * Add to eslint. Fix linting issues. remove unused imports.
+
+# 0.4.2: 02-21-2018
   * Fix issue in render with wrong prop name `err`
 
 # 0.4.1: 02-20-2018
