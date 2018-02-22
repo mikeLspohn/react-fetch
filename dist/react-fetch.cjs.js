@@ -2365,12 +2365,17 @@ var Fetch =
 function (_Component) {
   _inherits(Fetch, _Component);
 
-  function Fetch() {
+  function Fetch(props) {
     var _this;
 
     _classCallCheck(this, Fetch);
 
-    _this = _possibleConstructorReturn(this, (Fetch.__proto__ || Object.getPrototypeOf(Fetch)).call(this));
+    _this = _possibleConstructorReturn(this, (Fetch.__proto__ || Object.getPrototypeOf(Fetch)).call(this, props));
+
+    if (typeof props.render !== 'function' && typeof props.children !== 'function') {
+      throw Error('`children` or `render` prop passed to `Fetch` must be a function');
+    }
+
     _this.state = {
       data: null,
       error: null,
@@ -2433,62 +2438,16 @@ function (_Component) {
           error = _state.error;
       var _props = this.props,
           children = _props.children,
-          render = _props.render; // function-as-child support
-
-      if (typeof children === 'function') {
-        return children({
-          status: status,
-          data: data,
-          error: error
-        });
-      } // @TODO: Add render-prop support
-
-
-      if (render && typeof render !== 'function') {
-        throw Error('Render must be a function. (Hint - render-prop!)');
-      }
-
-      if (render) {
-        return render({
-          status: status,
-          data: data,
-          error: error
-        });
-      } // Component Injection Support
-
-
-      var _props2 = this.props,
-          loading = _props2.loading,
-          failure = _props2.failure,
-          initial = _props2.initial,
-          success = _props2.success;
-      var Initial = initial;
-      var Success = success;
-      var Failure = failure;
-      var Loading = loading;
-
-      switch (status) {
-        case 'Initial':
-          return react.createElement(Initial, null);
-
-        case 'Loading':
-          return react.createElement(Loading, null);
-
-        case 'Success':
-          return react.createElement(Success, {
-            data: data
-          });
-
-        case 'Failure':
-          return react.createElement(Failure, {
-            error: error
-          });
-
-        default:
-          return react.createElement(Failure, {
-            error: "something went wrong"
-          });
-      }
+          render = _props.render;
+      return typeof children === 'function' ? children({
+        status: status,
+        data: data,
+        error: error
+      }) : render({
+        status: status,
+        data: data,
+        err: err
+      });
     }
   }]);
 
@@ -2503,11 +2462,6 @@ Object.defineProperty(Fetch, "propTypes", {
     url: propTypes.string.isRequired,
     options: propTypes.object.isRequired,
     // @TODO: set shape to correct config shape for warning help
-    loading: CompOrFunc,
-    // Component, Should be node probably?
-    failure: CompOrFunc,
-    initial: CompOrFunc,
-    success: CompOrFunc,
     children: CompOrFunc,
     render: propTypes.func
   }

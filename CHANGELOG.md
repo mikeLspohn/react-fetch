@@ -1,3 +1,7 @@
+# 0.4.0: 02-20-2018
+  * Remove component injection support
+  * Add examples
+
 # 0.3.4: 02-20-2018
   * modularize fetch calls. refetch if url props changes
   * add new tests
