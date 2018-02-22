@@ -1,6 +1,6 @@
 # react-fetch
 
-Fetch api react component with support for function-as-child, render-props, component inject and HOC implementations.
+Fetch api react component with support for function-as-child and render-prop implementations.
 
 ### Installation
 
@@ -20,52 +20,28 @@ With Script Tag
 
 __you can install by specific tag version e.g. @mikelspohn/react-fetch@0.1.0__
 
-### Example Usage
+### docs
 
-```javascript
-import React from 'react'
-import Feth from '@mikelspohn/react-fetch'
+PropTypes:
+  * url - string
+  * options - object (same as regular `fetch` 2nd param config object)
+  * render - function component (receives props and passes to rendered child)
+  * children - dom node or function component
 
-// example function-as-child usage
-export const FetchExample = props => (
-  <Fetch url='http://localhost:3001/employees'>
-    {
-        ({status, data, error}) => {
-          switch (status) {
-            case 'Initial':
-              return null
-            case 'Loading':
-              return <p>Loading...</p>
-            case 'Success':
-              return <p>{JSON.stringify(data)}</p>
-            case 'Failure':
-              return <p style={{color: 'red'}}>Error: {JSON.stringify(error)}</p>
-            default:
-              return <p>Something went wrong</p>
-          }
-        }
-    }
-  </Fetch>
-)
+Props passed to function child/render from Fetch:
+  * status - Fetch.initial | Fetch.loading | Fetch.success | Fetch.failure
+  * data - object (data from successful fetch call)
+  * error - object (error object from failed fetch call)
 
-// Render Props usage
-<Fetch
-  url='/employees'
-  options={}
-  render={({status, data, error}) => <p>{status}</p>}
->
 
-// Other Usage passing components for status states
-//
-// <Fetch
-//   url='/employees'
-//   config={fetchOptions}
-//   loading={Loading}
-//   success={EmployeesTable}
-//   error={Flash}
-// />
-```
-
-# Development
+### Development
 
 To make a rollup build just run `rollup -c` _assuming you have rollup installed_
+
+### TODO
+
+  * Check browser compatability
+  * Cancellable requests
+  * HOC implementation (?)
+  * Optimize build size
+  * React doc-gen

@@ -8,10 +8,6 @@ export default class Fetch extends Component {
   static propTypes = {
     url: PropTypes.string.isRequired,
     options: PropTypes.object.isRequired, // @TODO: set shape to correct config shape for warning help
-    loading: CompOrFunc, // Component, Should be node probably?
-    failure: CompOrFunc,
-    initial: CompOrFunc,
-    success: CompOrFunc,
     children: CompOrFunc,
     render: PropTypes.func
   }
@@ -32,8 +28,13 @@ export default class Fetch extends Component {
   static success = 'Success'
   static failure = 'Failure'
 
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
+
+    if (typeof props.render !== 'function' && typeof props.children !== 'function') {
+      throw Error('`children` or `render` prop passed to `Fetch` must be a function')
+    }
+
     this.state = {
       data: null,
       error: null,
@@ -72,38 +73,8 @@ export default class Fetch extends Component {
     const { status, data, error } = this.state
     const { children, render } = this.props
 
-    // function-as-child support
-    if (typeof children === 'function') {
-      return children({status, data, error})
-    }
-
-    // @TODO: Add render-prop support
-    if (render && typeof render !== 'function') {
-      throw Error('Render must be a function. (Hint - render-prop!)')
-    }
-
-    if (render) {
-      return render({status, data, error})
-    }
-
-    // Component Injection Support
-    const { loading, failure, initial, success } = this.props
-    const Initial = initial
-    const Success = success
-    const Failure = failure
-    const Loading = loading
-
-    switch (status) {
-      case 'Initial':
-        return <Initial />
-      case 'Loading':
-        return <Loading />
-      case 'Success':
-        return <Success data={data} />
-      case 'Failure':
-        return <Failure error={error} />
-      default:
-        return <Failure error='something went wrong' />
-    }
+    return (typeof children === 'function')
+      ? children({status, data, error})
+      : render({status, data, err})
   }
 }
