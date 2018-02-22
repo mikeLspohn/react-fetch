@@ -1,3 +1,7 @@
+# 0.4.1: 02-20-2018
+  * Add link to examples in README
+  * Add type docs
+
 # 0.4.0: 02-20-2018
   * Remove component injection support
   * Add examples

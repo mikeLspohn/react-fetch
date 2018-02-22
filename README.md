@@ -20,19 +20,25 @@ With Script Tag
 
 __you can install by specific tag version e.g. @mikelspohn/react-fetch@0.1.0__
 
+### [Examples](https://github.com/mikeLspohn/react-fetch/tree/master/examples)
+
 ### docs
 
-PropTypes:
-  * url - string
-  * options - object (same as regular `fetch` 2nd param config object)
-  * render - function component (receives props and passes to rendered child)
-  * children - dom node or function component
+```javascript
+type fetchConfig = // default fetch options object
+type fetchRenderProps t = {
+  status: 'Initial' | 'Loading' | 'Success' | 'Failure',
+  data: t,
+  error: ErrorObject
+}
 
-Props passed to function child/render from Fetch:
-  * status - Fetch.initial | Fetch.loading | Fetch.success | Fetch.failure
-  * data - object (data from successful fetch call)
-  * error - object (error object from failed fetch call)
-
+type FetchProps t = {
+    url: string,
+    options: fetchConfig,
+    children: (fetchRenderProps) => React.Element,
+    render: (fetchRenderProps) => React.Element
+}
+```
 
 ### Development
 
