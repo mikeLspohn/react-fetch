@@ -2446,7 +2446,7 @@ function (_Component) {
       }) : render({
         status: status,
         data: data,
-        err: err
+        error: error
       });
     }
   }]);

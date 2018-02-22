@@ -75,6 +75,6 @@ export default class Fetch extends Component {
 
     return (typeof children === 'function')
       ? children({status, data, error})
-      : render({status, data, err})
+      : render({status, data, error})
   }
 }

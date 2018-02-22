@@ -1,3 +1,6 @@
+# 0.4.2: 02-20-2018
+  * Fix issue in render with wrong prop name `err`
+
 # 0.4.1: 02-20-2018
   * Add link to examples in README
   * Add type docs
