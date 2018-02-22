@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/mikeLspohn/react-fetch.svg?style=svg)](https://circleci.com/gh/mikeLspohn/react-fetch)
+
 # react-fetch
 
 Fetch api React component with support for function-as-child and render-prop implementations.
