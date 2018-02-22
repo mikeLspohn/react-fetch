@@ -1,6 +1,6 @@
 # react-fetch
 
-Fetch api react component with support for function-as-child and render-prop implementations.
+Fetch api React component with support for function-as-child and render-prop implementations.
 
 ### Installation
 
@@ -8,17 +8,13 @@ Using Yarn or NPM
 
 `yarn add @mikelspohn/react-fetch`
 
-or
-
-`npm add --save @mikelspohn/react-fetch`
+`npm install --save @mikelspohn/react-fetch`
 
 With Script Tag
 
   * `git clone https://github.com/mikelspohn/react-fetch.git`
-  * `cp ./react-fetch/dist/react-fetch/umd.js path/to/project` // copy umd build to your project
+  * `cp ./react-fetch/dist/react-fetch/umd.js path/to/project`
   * `<script src='./react-fetch.umd.js'></script>`
-
-__you can install by specific tag version e.g. @mikelspohn/react-fetch@0.1.0__
 
 ### [Examples](https://github.com/mikeLspohn/react-fetch/tree/master/examples)
 
