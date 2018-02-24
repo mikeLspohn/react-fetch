@@ -20,23 +20,7 @@ With Script Tag
 
 ### [Examples](https://github.com/mikeLspohn/react-fetch/tree/master/examples)
 
-### docs
-
-```javascript
-type fetchConfig = // default fetch options object
-type fetchRenderProps t = {
-  status: 'Initial' | 'Loading' | 'Success' | 'Failure',
-  data: t,
-  error: ErrorObject
-}
-
-type FetchProps t = {
-    url: string,
-    options: fetchConfig,
-    children: (fetchRenderProps) => React.Element,
-    render: (fetchRenderProps) => React.Element
-}
-```
+### [Documentation](https://github.com/mikeLspohn/react-fetch/tree/master/docs)
 
 ### Development
 
