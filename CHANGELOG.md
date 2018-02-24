@@ -1,3 +1,6 @@
+# 0.4.4: 02-24-2018
+  * Update docs and move into own directory
+
 # 0.4.3: 02-21-2018
   * Add to eslint. Fix linting issues. remove unused imports.
 
